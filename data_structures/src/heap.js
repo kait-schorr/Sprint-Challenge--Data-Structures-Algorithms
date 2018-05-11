@@ -1,6 +1,12 @@
-const heapsort = (arr) => {
+const heapsort = arr => {
   /* Your code here */
-  
+  let heap = new Heap();
+  arr.forEach(element => heap.insert(element));
+  let sorted = [];
+  while (heap.size > 0) {
+    sorted.unshift(heap.delete());
+  }
+  return sorted;
 };
 
 class Heap {
@@ -38,9 +44,12 @@ class Heap {
   }
 
   bubbleUp(index) {
-    const parent = Math.floor(index/2);
+    const parent = Math.floor(index / 2);
     if (parent > 0 && this.storage[parent] < this.storage[index]) {
-      [this.storage[parent], this.storage[index]] = [this.storage[index], this.storage[parent]];
+      [this.storage[parent], this.storage[index]] = [
+        this.storage[index],
+        this.storage[parent]
+      ];
       this.bubbleUp(parent);
     }
   }
@@ -54,18 +63,24 @@ class Heap {
       if (this.storage[child2] === undefined) {
         maxChild = child1;
       } else if (this.storage[child2] !== undefined) {
-        maxChild = this.storage[child1] > this.storage[child2] ? child1 : child2;
+        maxChild =
+          this.storage[child1] > this.storage[child2] ? child1 : child2;
       }
 
       if (this.storage[index] < this.storage[maxChild]) {
-        [this.storage[maxChild], this.storage[index]] = [this.storage[index], this.storage[maxChild]];
+        [this.storage[maxChild], this.storage[index]] = [
+          this.storage[index],
+          this.storage[maxChild]
+        ];
         this.siftDown(maxChild);
       }
     }
   }
 }
 
+heapsort([3, 6, 8]);
+
 module.exports = {
   Heap,
-  heapsort,
+  heapsort
 };
